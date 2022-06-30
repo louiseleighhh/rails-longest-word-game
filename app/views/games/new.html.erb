@@ -1,0 +1,13 @@
+
+<form action="/score" method="post"
+  ><h1>New game</h1>
+  <%@letters.each do |letter|%>
+    <li><%=@letter%></li>
+  <%end%>
+  <p>What is the longest word you can find?</p>
+  <input id="form" type="text" name="answer">
+  <input id="button" type="submit" value="Play">
+  <%= hidden_field_tag :letters, @letters.join(',') %>
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+</form>
+<%=link_to "Play again", new_path%>

@@ -1,0 +1,51 @@
+<h1>Result</h1>
+<%if @match%>
+  <%if @reader["found"]%>
+    <p><%="<b>CONGRATULATIONS!</b> #{@answer.upcase} is a valid English word!".html_safe%></p>
+  <%else%>
+    <p><%="Sorry but <b>#{@answer.upcase}</b> does not seem to be a valid English word..".html_safe%></p>
+  <%end%>
+<%else%>
+    <p><%="Sorry but <b>#{@answer.upcase}</b> can't be built out of #{@letters}".html_safe%></p>
+<%end%>
+<h1>POINTS <%=session[:score] || 0%></h1>
+<%# <script>
+  var points = 0
+  const answer = document.getElementById('answer').innerHTML;
+  const letters = document.getElementById('letters').innerHTML;
+  const answerSplit = answer.split('');
+  const match = answerSplit.every (all_of_answer => letters.includes(all_of_answer));
+
+  const fetchWord = (word) => {
+  fetch(`https://wagon-dictionary.herokuapp.com/${word}`)
+    .then(response => response.json())
+    .then((data) => {
+      console.log(data)
+      insertResults(data)
+      })
+    }
+
+    const insertResults = (word) => {
+      if (match) {
+        if (word.found) {
+          console.log("Bingo")
+          document.getElementById('answer').innerHTML = `<b>CONGRATULATIONS!</b> ${answer.toUpperCase()} is a valid English word!`;
+          document.getElementById('answer').style.display = "block";
+          points += answer.length
+          console.log(points)
+        }
+        else {
+          console.log("That ain't a word");
+          document.getElementById('answer').innerHTML = `Sorry but ${answer.toUpperCase().bold()} does not seem to be a valid English word...`;
+          document.getElementById('answer').style.display = "block";
+        }}
+    else {
+      console.log("That's not on the list");
+      document.getElementById('answer').innerHTML = `Sorry but ${answer.toUpperCase().bold()} can't be built out of ${letters}`;
+      document.getElementById('answer').style.display = "block";
+    }
+  }
+
+  fetchWord(answer);
+</script> %>
+<%=link_to "Play again", new_path%>
